@@ -3,7 +3,13 @@ import Layout from "../components/Layout";
 function PageNotFound() {
   return (
     <div>
-      <Layout>This is PageNotFound Page</Layout>
+      <Layout
+        title="Page Not Found"
+        description="Not found error page"
+        keywords="mongodb react js node express"
+      >
+        This is PageNotFound Page
+      </Layout>
     </div>
   );
 }
