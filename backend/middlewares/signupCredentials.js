@@ -14,6 +14,8 @@ function signupCredValidator(req, res, next) {
     next();
   } else {
     res.status(401).json({
+      register: false,
+      cred: false,
       message: "Invalid credentials",
     });
   }

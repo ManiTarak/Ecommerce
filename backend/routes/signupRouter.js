@@ -21,11 +21,14 @@ signupRouter.post("/", signupCredValidator, async (req, res) => {
     });
     if (userCreated) {
       res.status(200).json({
+        register: true,
         message: "User SignedUp successfully",
       });
     }
   } else {
     res.status(400).json({
+      register: false,
+      existed: true,
       message: "User already existed please login",
     });
   }

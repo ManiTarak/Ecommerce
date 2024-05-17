@@ -18,6 +18,7 @@ async function loginValidator(req, res, next) {
     });
     if (!user) {
       res.status(401).json({
+        existed: false,
         message: "Invalid User or User doesn't existed",
       });
       return;
@@ -29,6 +30,7 @@ async function loginValidator(req, res, next) {
       next();
     } else {
       res.status(401).json({
+        pass: false,
         message: "Wrong Password",
       });
       return;

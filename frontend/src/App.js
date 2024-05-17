@@ -1,12 +1,16 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage, About, Contact, PageNotFound, Policy } from "./pages/index";
+import Register from "./pages/Auth/Register";
+import Login from "./pages/Auth/Login";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage></HomePage>}></Route>
         <Route path="/About" element={<About></About>}></Route>
+        <Route path="/register" element={<Register></Register>}></Route>
+        <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/contact" element={<Contact></Contact>}></Route>
         <Route path="/policy" element={<Policy></Policy>}></Route>
         <Route path="*" element={<PageNotFound></PageNotFound>}></Route>

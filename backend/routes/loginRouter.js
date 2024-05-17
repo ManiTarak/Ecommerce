@@ -12,11 +12,13 @@ loginRouter.post("/", loginValidator, (req, res) => {
     (err, data) => {
       if (err) {
         res.status(500).json({
+          error: true,
           message: "Sorry there is an error while creating token",
         });
       } else {
         res.status(200).json({
           token: data,
+          message: "User Logged in Successfully",
         });
       }
     },
