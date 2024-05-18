@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Layout from "../../components/Layout";
+import { useAuth } from "../../context/auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [auth, setAuth] = useAuth();
 
   const handleSubmitClick = async (event) => {
     event.preventDefault();
@@ -20,7 +23,13 @@ const Login = () => {
     const finalRes = await res.json();
     if (finalRes.token && finalRes.token != "") {
       toast.success(finalRes.message);
-      navigate("/");
+      localStorage.setItem("authInfo", JSON.stringify(finalRes));
+      setAuth({
+        ...auth,
+        user: finalRes.user,
+        token: finalRes.token,
+      });
+      navigate("/", { replace: true });
     } else if (!finalRes.existed) {
       toast.error(finalRes.message);
     } else if (!finalRes.pass) {

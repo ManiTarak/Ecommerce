@@ -2,11 +2,24 @@ import { Link } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
+import { useAuth } from "../context/auth";
+import toast from "react-hot-toast";
 
 function Header() {
   const [nav, setNav] = useState(false);
   const handleClick = () => {
     setNav(!nav);
+  };
+
+  const [auth, setAuth] = useAuth();
+  const handleLogoutClick = () => {
+    setAuth({
+      ...auth,
+      user: null,
+      token: "",
+    });
+    localStorage.removeItem("authInfo");
+    toast.success("Logout Successfully");
   };
   return (
     <>
@@ -22,13 +35,27 @@ function Header() {
             <li>Contact</li>
           </Link>
 
-          <Link className="hover:text-gray-400 hover:underline" to="/register">
-            <li>Register</li>
-          </Link>
-
-          <Link className="hover:text-gray-400 hover:underline" to="/login">
-            <li>Login</li>
-          </Link>
+          {!auth.user ? (
+            <>
+              <Link
+                className="hover:text-gray-400 hover:underline"
+                to="/register"
+              >
+                <li>Register</li>
+              </Link>
+              <Link className="hover:text-gray-400 hover:underline" to="/login">
+                <li>Login</li>
+              </Link>
+            </>
+          ) : (
+            <Link
+              className="hover:text-gray-400 hover:underline"
+              onClick={handleLogoutClick}
+              to="/login"
+            >
+              <li>Logout</li>
+            </Link>
+          )}
         </ul>
         <div className="md:hidden mr-4 z-10" onClick={handleClick}>
           {nav ? (
@@ -54,14 +81,25 @@ function Header() {
           <Link className="hover:text-gray-400" to="/contact">
             <li>Contact</li>
           </Link>
+          {!auth.user ? (
+            <>
+              <Link className="hover:text-gray-400" to="/register">
+                <li>Register</li>
+              </Link>
 
-          <Link className="hover:text-gray-400" to="/register">
-            <li>Register</li>
-          </Link>
-
-          <Link className="hover:text-gray-400" to="/login">
-            <li>Login</li>
-          </Link>
+              <Link className="hover:text-gray-400" to="/login">
+                <li>Login</li>
+              </Link>
+            </>
+          ) : (
+            <Link
+              className="hover:text-gray-400"
+              onClick={handleLogoutClick}
+              to="/login"
+            >
+              <li>Logout</li>
+            </Link>
+          )}
         </ul>
       </nav>
     </>

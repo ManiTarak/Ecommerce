@@ -18,6 +18,13 @@ loginRouter.post("/", loginValidator, (req, res) => {
       } else {
         res.status(200).json({
           token: data,
+          user: {
+            id: req.user._id,
+            name: req.user.name,
+            email: req.user.email,
+            phone: req.user.phone,
+            address: req.user.address,
+          },
           message: "User Logged in Successfully",
         });
       }

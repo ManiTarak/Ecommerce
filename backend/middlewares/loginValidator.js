@@ -27,6 +27,7 @@ async function loginValidator(req, res, next) {
     const passwordCheck = await comparePassword(password, hashedPassword);
     if (passwordCheck) {
       req.id = user._id;
+      req.user = user;
       next();
     } else {
       res.status(401).json({

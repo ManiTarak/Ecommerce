@@ -1,6 +1,8 @@
 import Layout from "../components/Layout";
+import { useAuth } from "../context/auth";
 
 function HomePage() {
+  const [auth, setAuth] = useAuth();
   return (
     <div>
       <Layout
@@ -9,6 +11,7 @@ function HomePage() {
         keywords="mongodb react js node express"
       >
         This is HomPage Page
+        <pre>{JSON.stringify(auth)}</pre>
       </Layout>
     </div>
   );
