@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Layout from "../../components/Layout";
 import { useAuth } from "../../context/auth";
+import { useLocation } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,7 +11,23 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const [auth, setAuth] = useAuth();
-
+  const location = useLocation();
+  if (auth.user && auth.token != "") {
+    fetch(`${process.env.REACT_APP_URL}/user-auth`, {
+      method: "GET",
+      headers: {
+        Authorization: auth.token,
+      },
+    })
+      .then((data) => {
+        return data.json();
+      })
+      .then((data) => {
+        if (data.OK) {
+          navigate("/");
+        }
+      });
+  }
   const handleSubmitClick = async (event) => {
     event.preventDefault();
     const res = await fetch(`${process.env.REACT_APP_URL}/login`, {
@@ -29,7 +46,8 @@ const Login = () => {
         user: finalRes.user,
         token: finalRes.token,
       });
-      navigate("/", { replace: true });
+      const redirectPath = location.state?.path || "/";
+      navigate(redirectPath, { replace: true });
     } else if (!finalRes.existed) {
       toast.error(finalRes.message);
     } else if (!finalRes.pass) {

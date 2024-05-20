@@ -34,6 +34,12 @@ function Header() {
           <Link className="hover:text-gray-400 hover:underline" to="/contact">
             <li>Contact</li>
           </Link>
+          <Link className="hover:text-gray-400 hover:underline" to="/profile">
+            <li>Profile</li>
+          </Link>
+          <Link className="hover:text-gray-400 hover:underline" to="/dashboard">
+            <li>Dashboard</li>
+          </Link>
 
           {!auth.user ? (
             <>
@@ -80,6 +86,12 @@ function Header() {
 
           <Link className="hover:text-gray-400" to="/contact">
             <li>Contact</li>
+          </Link>
+          <Link className="hover:text-gray-400" to="/profile">
+            <li>Profile</li>
+          </Link>
+          <Link className="hover:text-gray-400" to="/dashboard">
+            <li>Dashboard</li>
           </Link>
           {!auth.user ? (
             <>
