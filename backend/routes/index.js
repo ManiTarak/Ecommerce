@@ -3,6 +3,9 @@ const signupRouter = require("./signupRouter");
 const loginRouter = require("./loginRouter");
 const rootRouter = express.Router();
 const authenticationCheck = require("../middlewares/authMiddleware");
+const ForgetCredCheck = require("../middlewares/forgetCredCheck");
+const User = require("../db/user");
+const { hashpassword } = require("../helpers/hashingPass");
 //signup route
 rootRouter.use("/signup", signupRouter);
 
@@ -16,6 +19,24 @@ rootRouter.get("/user-auth", authenticationCheck, (req, res) => {
   res.status(200).send({
     OK: true,
   });
+});
+
+// forget-password , update new password based on Sport that entered during registeration
+rootRouter.post("/forget-password", ForgetCredCheck, async (req, res) => {
+  try {
+    const hashedPassword = await hashpassword(req.body.password);
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, {
+      password: hashedPassword,
+    });
+    res.status(200).send({
+      updated: true,
+      message: "Password updated successfully",
+    });
+  } catch (e) {
+    res.status(500).send({
+      message: "Error in Password Updation",
+    });
+  }
 });
 
 module.exports = rootRouter;

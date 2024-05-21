@@ -9,7 +9,7 @@ signupRouter.post("/", signupCredValidator, async (req, res) => {
     email: req.body.email,
   });
   if (!alreadyExisted) {
-    const { name, email, password, role, phone, address } = req.body;
+    const { name, email, password, role, phone, address, sport } = req.body;
     const hashedPassword = await hashpassword(password);
     const userCreated = await User.create({
       name: name,
@@ -18,6 +18,7 @@ signupRouter.post("/", signupCredValidator, async (req, res) => {
       role: role,
       address: address,
       password: hashedPassword,
+      sport: sport,
     });
     if (userCreated) {
       res.status(200).json({

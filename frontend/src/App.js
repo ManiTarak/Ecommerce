@@ -6,6 +6,7 @@ import Login from "./pages/Auth/Login";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import ForgetPass from "./pages/Auth/ForgetPass";
 function App() {
   return (
     <Routes>
@@ -13,6 +14,10 @@ function App() {
       <Route path="/About" element={<About></About>}></Route>
       <Route path="/register" element={<Register></Register>}></Route>
       <Route path="/login" element={<Login></Login>}></Route>
+      <Route
+        path="/forget-password"
+        element={<ForgetPass></ForgetPass>}
+      ></Route>
       <Route path="/contact" element={<Contact></Contact>}></Route>
       <Route path="/policy" element={<Policy></Policy>}></Route>
       <Route

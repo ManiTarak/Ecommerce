@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    sport: {
+      type: String,
+      require: true,
+    },
   },
   { timestamps: true }
 );

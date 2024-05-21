@@ -8,6 +8,7 @@ function signupCredValidator(req, res, next) {
     phone: zod.string().min(10).max(10),
     address: zod.string(),
     role: zod.number(),
+    sport: zod.string().min(1),
   });
 
   if (signupSchema.safeParse(req.body).success) {

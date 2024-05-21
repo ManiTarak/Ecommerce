@@ -85,12 +85,20 @@ const Login = () => {
               setPassword(e.target.value);
             }}
           ></input>
-
           <button
             type="submit"
             className="text-white text-xl mt-5 mb-2 font-semibold bg-black py-2 px-8 w-52 font-serif "
           >
             Login
+          </button>
+
+          <button
+            className="text-white text mt-5 mb-2 font-semibold bg-black py-2 px-8 w-52 font-serif "
+            onClick={() => {
+              navigate("/forget-password");
+            }}
+          >
+            Forget Password
           </button>
         </form>
       </div>

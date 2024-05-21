@@ -10,10 +10,11 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [sport, setSport] = useState("");
 
   const handleSubmitClick = async (event) => {
     event.preventDefault();
-    console.log(name + email + password + address + phone);
+
     const res = await fetch(`${process.env.REACT_APP_URL}/signup`, {
       method: "POST",
       body: JSON.stringify({
@@ -23,6 +24,7 @@ const Register = () => {
         address,
         phone,
         role: 1,
+        sport,
       }),
     });
     const finalRes = await res.json();
@@ -83,6 +85,16 @@ const Register = () => {
             required
             onChange={(e) => {
               setPhone(e.target.value);
+            }}
+          ></input>
+          <input
+            className="border-b-2 text-center border-solid border-slate-500 h-8  w-52 mb-2 focus:outline-none focus:ring-0 focus:border-gray-900"
+            placeholder="Enter Your Faviourte Sport"
+            type="text"
+            value={sport}
+            required
+            onChange={(e) => {
+              setSport(e.target.value);
             }}
           ></input>
           <input
