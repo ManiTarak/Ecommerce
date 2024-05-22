@@ -3,7 +3,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
 import { useAuth } from "../context/auth";
+import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";
 import toast from "react-hot-toast";
+import Dropdown from "./Dropdown";
 
 function Header() {
   const [nav, setNav] = useState(false);
@@ -21,6 +23,7 @@ function Header() {
     localStorage.removeItem("authInfo");
     toast.success("Logout Successfully");
   };
+  const [dropClick, setDropClick] = useState(false);
   return (
     <>
       <nav className="sticky top-0 h-16 left-0 flex justify-between items-center bg-[#131921]  ">
@@ -37,9 +40,6 @@ function Header() {
           <Link className="hover:text-gray-400 hover:underline" to="/profile">
             <li>Profile</li>
           </Link>
-          <Link className="hover:text-gray-400 hover:underline" to="/dashboard">
-            <li>Dashboard</li>
-          </Link>
 
           {!auth.user ? (
             <>
@@ -54,13 +54,35 @@ function Header() {
               </Link>
             </>
           ) : (
-            <Link
-              className="hover:text-gray-400 hover:underline"
-              onClick={handleLogoutClick}
-              to="/login"
+            <div
+              className="flex hover:cursor-pointer "
+              onClick={() => {
+                setDropClick(!dropClick);
+              }}
             >
-              <li>Logout</li>
-            </Link>
+              {auth.user.name}
+              {dropClick ? (
+                <MdArrowDropUp className="mt-[6px]"></MdArrowDropUp>
+              ) : (
+                <MdArrowDropDown className="mt-[6px]"></MdArrowDropDown>
+              )}
+              {dropClick ? (
+                <ul className="flex flex-col justify-center items-center absolute w-[150px] h-[150px] top-[63px] bg-gray-500 right-[0px]">
+                  <li className="text-center w-[100%] mb-[5px] rounded-r-lg border-solid hover:border-2 hover:border-l-4 hover:bg-black">
+                    <Link className="hover:text-gray-400" to="/dashboard">
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li className="text-center w-[100%]  rounded-r-lg border-solid hover:border-2 hover:border-l-4 hover:bg-black">
+                    <Link onClick={handleLogoutClick} to="/login">
+                      Logout
+                    </Link>
+                  </li>
+                </ul>
+              ) : (
+                <></>
+              )}
+            </div>
           )}
         </ul>
         <div className="md:hidden mr-4 z-10" onClick={handleClick}>
