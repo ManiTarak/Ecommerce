@@ -24,12 +24,13 @@ loginRouter.post("/", loginValidator, (req, res) => {
             email: req.user.email,
             phone: req.user.phone,
             address: req.user.address,
+            role: req.user.role,
           },
           message: "User Logged in Successfully",
         });
       }
     },
-    { expiresIn: "1h" }
+    { expiresIn: 60 }
   );
 });
 

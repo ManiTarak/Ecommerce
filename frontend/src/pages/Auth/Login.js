@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import Layout from "../../components/Layout";
 import { useAuth } from "../../context/auth";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,21 +13,18 @@ const Login = () => {
 
   const [auth, setAuth] = useAuth();
   const location = useLocation();
-  if (auth.user && auth.token != "") {
-    fetch(`${process.env.REACT_APP_URL}/user-auth`, {
-      method: "GET",
+  async function backendCall() {
+    const res = await axios.get(`${process.env.REACT_APP_URL}/user-auth`, {
       headers: {
         Authorization: auth.token,
       },
-    })
-      .then((data) => {
-        return data.json();
-      })
-      .then((data) => {
-        if (data.OK) {
-          navigate("/");
-        }
-      });
+    });
+    if (res.data.OK) {
+      navigate("/");
+    }
+  }
+  if (auth.user && auth.token != "") {
+    backendCall();
   }
   const handleSubmitClick = async (event) => {
     event.preventDefault();

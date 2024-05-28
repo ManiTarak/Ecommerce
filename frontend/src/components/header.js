@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useAuth } from "../context/auth";
 import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";
 import toast from "react-hot-toast";
-import Dropdown from "./Dropdown";
 
 function Header() {
   const [nav, setNav] = useState(false);
@@ -69,7 +68,14 @@ function Header() {
               {dropClick ? (
                 <ul className="flex flex-col justify-center items-center absolute w-[150px] h-[150px] top-[63px] bg-gray-500 right-[0px]">
                   <li className="text-center w-[100%] mb-[5px] rounded-r-lg border-solid hover:border-2 hover:border-l-4 hover:bg-black">
-                    <Link className="hover:text-gray-400" to="/dashboard">
+                    <Link
+                      className="hover:text-gray-400"
+                      to={`${
+                        auth.user.role === 0
+                          ? "/dashboard/admin"
+                          : "/dashboard/user"
+                      }`}
+                    >
                       Dashboard
                     </Link>
                   </li>

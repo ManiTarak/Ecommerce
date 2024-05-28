@@ -6,6 +6,7 @@ const authenticationCheck = require("../middlewares/authMiddleware");
 const ForgetCredCheck = require("../middlewares/forgetCredCheck");
 const User = require("../db/user");
 const { hashpassword } = require("../helpers/hashingPass");
+const isAdmin = require("../middlewares/isAdmin");
 //signup route
 rootRouter.use("/signup", signupRouter);
 
@@ -37,6 +38,14 @@ rootRouter.post("/forget-password", ForgetCredCheck, async (req, res) => {
       message: "Error in Password Updation",
     });
   }
+});
+
+//admin - auth
+
+rootRouter.get("/admin-auth", authenticationCheck, isAdmin, (req, res) => {
+  res.status(200).send({
+    OK: true,
+  });
 });
 
 module.exports = rootRouter;

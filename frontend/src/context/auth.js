@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import Login from "../pages/Auth/Login";
+import axios from "axios";
 
 //craeting Auth context
 const AuthContext = createContext();
@@ -14,24 +15,22 @@ const AuthProvider = ({ children }) => {
 
   //checking whether the token present in localstorage and if present store it in global auth state variable
   useEffect(() => {
+    async function backendCall() {
+      const res = await axios.get(`${process.env.REACT_APP_URL}/user-auth`, {
+        headers: {
+          Authorization: JSON.parse(localStorage.getItem("authInfo")).token,
+        },
+      });
+      if (!res.data.OK) {
+        <Login></Login>;
+      } else {
+        setAuth(JSON.parse(localStorage.getItem("authInfo")));
+      }
+    }
+
     if (localStorage.getItem("authInfo")) {
       if (JSON.parse(localStorage.getItem("authInfo")).token != "") {
-        fetch(`${process.env.REACT_APP_URL}/user-auth`, {
-          method: "GET",
-          headers: {
-            Authorization: JSON.parse(localStorage.getItem("authInfo")).token,
-          },
-        })
-          .then((data) => {
-            return data.json();
-          })
-          .then((data) => {
-            if (!data.OK) {
-              <Login></Login>;
-            } else {
-              setAuth(JSON.parse(localStorage.getItem("authInfo")));
-            }
-          });
+        backendCall();
       }
     }
   }, []);

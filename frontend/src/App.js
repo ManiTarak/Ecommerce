@@ -1,12 +1,21 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { HomePage, About, Contact, PageNotFound, Policy } from "./pages/index";
-import Register from "./pages/Auth/Register";
-import Login from "./pages/Auth/Login";
-import Profile from "./pages/Profile";
-import ProtectedRoute from "./pages/ProtectedRoute";
-import Dashboard from "./pages/Dashboard";
-import ForgetPass from "./pages/Auth/ForgetPass";
+import {
+  HomePage,
+  About,
+  Contact,
+  PageNotFound,
+  Policy,
+  AdminRoute,
+  AdminDashboard,
+  Register,
+  Login,
+  Profile,
+  Dashboard,
+  ForgetPass,
+  ProtectedRoute,
+} from "./pages/index";
+
 function App() {
   return (
     <Routes>
@@ -28,14 +37,20 @@ function App() {
           </ProtectedRoute>
         }
       ></Route>
-      <Route
+      {/* <Route
         path="/dashboard"
         element={
           <ProtectedRoute>
             <Dashboard></Dashboard>
           </ProtectedRoute>
         }
-      ></Route>
+      ></Route> */}
+      <Route path="/dashboard" element={<ProtectedRoute></ProtectedRoute>}>
+        <Route path="user" element={<Dashboard></Dashboard>} />
+      </Route>
+      <Route path="/dashboard" element={<AdminRoute></AdminRoute>}>
+        <Route path="admin" element={<AdminDashboard></AdminDashboard>} />
+      </Route>
       <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
     </Routes>
   );

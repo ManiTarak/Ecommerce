@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useAuth } from "../context/auth";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const ProtectedRoute = ({ children }) => {
   const [auth, setAuth] = useAuth();
@@ -10,28 +11,27 @@ const ProtectedRoute = ({ children }) => {
 
   //checking whether user is logged in or not logged in
   useEffect(() => {
-    if (auth?.token != "") {
-      fetch(`${process.env.REACT_APP_URL}/user-auth`, {
-        method: "GET",
+    async function backendCall() {
+      const res = await axios.get(`${process.env.REACT_APP_URL}/user-auth`, {
         headers: {
-          Authorization: auth.token,
+          Authorization: JSON.parse(localStorage.getItem("authInfo")).token,
         },
-      })
-        .then((data) => {
-          return data.json();
-        })
-        .then((data) => {
-          if (!data.OK) {
-            navigate("/login");
-          }
-        });
+      });
+      if (!res.data.OK) {
+        navigate("/login");
+      } else {
+        navigate(location.pathname);
+      }
+    }
+    if (JSON.parse(localStorage.getItem("authInfo"))) {
+      backendCall();
     }
   }, [auth?.token]);
 
   return (
     <div>
       {auth.user ? (
-        children
+        <Outlet />
       ) : (
         <Navigate to="/login" state={{ path: location.pathname }}></Navigate>
       )}
