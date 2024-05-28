@@ -6,15 +6,21 @@ import {
   Contact,
   PageNotFound,
   Policy,
-  AdminRoute,
-  AdminDashboard,
   Register,
   Login,
-  Profile,
-  Dashboard,
   ForgetPass,
   ProtectedRoute,
 } from "./pages/index";
+import {
+  AdminDashboard,
+  AdminDetails,
+  AdminRoute,
+  CreateCategory,
+  CreateProduct,
+  UsersList,
+} from "./pages/Admin/index";
+
+import { Orders, UserDashboard, Profile } from "./pages/User/index";
 
 function App() {
   return (
@@ -29,14 +35,7 @@ function App() {
       ></Route>
       <Route path="/contact" element={<Contact></Contact>}></Route>
       <Route path="/policy" element={<Policy></Policy>}></Route>
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile></Profile>
-          </ProtectedRoute>
-        }
-      ></Route>
+
       {/* <Route
         path="/dashboard"
         element={
@@ -46,10 +45,25 @@ function App() {
         }
       ></Route> */}
       <Route path="/dashboard" element={<ProtectedRoute></ProtectedRoute>}>
-        <Route path="user" element={<Dashboard></Dashboard>} />
+        <Route path="user" element={<UserDashboard></UserDashboard>}>
+          <Route index element={<Profile></Profile>}></Route>
+          <Route path="profile" element={<Profile></Profile>} />
+          <Route path="orders" element={<Orders></Orders>} />
+        </Route>
       </Route>
       <Route path="/dashboard" element={<AdminRoute></AdminRoute>}>
-        <Route path="admin" element={<AdminDashboard></AdminDashboard>} />
+        <Route path="admin" element={<AdminDashboard></AdminDashboard>}>
+          <Route index element={<AdminDetails></AdminDetails>}></Route>
+          <Route
+            path="create-category"
+            element={<CreateCategory></CreateCategory>}
+          ></Route>
+          <Route
+            path="create-product"
+            element={<CreateProduct></CreateProduct>}
+          ></Route>
+          <Route path="users" element={<UsersList></UsersList>}></Route>
+        </Route>
       </Route>
       <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
     </Routes>
