@@ -7,6 +7,7 @@ const ForgetCredCheck = require("../middlewares/forgetCredCheck");
 const User = require("../db/user");
 const { hashpassword } = require("../helpers/hashingPass");
 const isAdmin = require("../middlewares/isAdmin");
+const categoryRouter = require("./CategoryRouter");
 //signup route
 rootRouter.use("/signup", signupRouter);
 
@@ -47,5 +48,8 @@ rootRouter.get("/admin-auth", authenticationCheck, isAdmin, (req, res) => {
     OK: true,
   });
 });
+
+// Category - route
+rootRouter.use("/category", categoryRouter);
 
 module.exports = rootRouter;
