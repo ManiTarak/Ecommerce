@@ -8,6 +8,7 @@ const User = require("../db/user");
 const { hashpassword } = require("../helpers/hashingPass");
 const isAdmin = require("../middlewares/isAdmin");
 const categoryRouter = require("./CategoryRouter");
+const productRouter = require("./ProductRouter");
 //signup route
 rootRouter.use("/signup", signupRouter);
 
@@ -51,5 +52,8 @@ rootRouter.get("/admin-auth", authenticationCheck, isAdmin, (req, res) => {
 
 // Category - route
 rootRouter.use("/category", categoryRouter);
+
+// Product - route
+rootRouter.use("/product", productRouter);
 
 module.exports = rootRouter;
