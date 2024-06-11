@@ -140,7 +140,7 @@ categoryRouter.delete(
         });
       } else {
         res.status(404).send({
-          success: true,
+          success: false,
           message: "Category is not found",
         });
       }
