@@ -94,7 +94,7 @@ productRouter.get("/get-products", async (req, res) => {
 productRouter.get("/get-Single-Product/:slug", async (req, res) => {
   try {
     const product = await Product.findOne({
-      slug: req.params.slug,
+      _id: req.params.slug,
     })
       .select("-photo")
       .populate("category");
@@ -120,7 +120,6 @@ productRouter.get("/get-photo/:id", async (req, res) => {
       return res.status(200).send(product.photo.data);
     }
   } catch (e) {
-    console.log(e);
     res.status(500).send({
       success: false,
       message: "Something bad happend while getting photo",
@@ -154,11 +153,9 @@ productRouter.put(
         photo.size < 100000
       ) {
         if (photo) {
-          console.log("d");
           photo.data = fs.readFileSync(photo.path);
           photo.contentType = photo.type;
         }
-
         const product = await Product.findByIdAndUpdate(req.params.pid, {
           name: name,
           slug: slugify(name),
@@ -183,8 +180,9 @@ productRouter.put(
         });
       }
     } catch (e) {
+      console.log(e);
       res.status(500).send({
-        success: true,
+        success: false,
         message: "Something bad happend in updating product",
       });
     }

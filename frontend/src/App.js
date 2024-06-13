@@ -18,6 +18,8 @@ import {
   CreateCategory,
   CreateProduct,
   UsersList,
+  Products,
+  UpdateProduct,
 } from "./pages/Admin/index";
 
 import { Orders, UserDashboard, Profile } from "./pages/User/index";
@@ -62,7 +64,9 @@ function App() {
             path="create-product"
             element={<CreateProduct></CreateProduct>}
           ></Route>
+          <Route path="products" element={<Products></Products>}></Route>
           <Route path="users" element={<UsersList></UsersList>}></Route>
+          <Route path="product/:id" element={<UpdateProduct></UpdateProduct>} />
         </Route>
       </Route>
       <Route path="*" element={<PageNotFound></PageNotFound>}></Route>

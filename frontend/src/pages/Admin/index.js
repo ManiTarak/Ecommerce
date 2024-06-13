@@ -5,6 +5,8 @@ import AdminRoute from "./AdminRoute";
 import CreateCategory from "./CreateCategory";
 import CreateProduct from "./CreateProduct";
 import UsersList from "./UsersList";
+import Products from "./Products";
+import UpdateProduct from "./UpdateProduct";
 
 export {
   AdminDashboard,
@@ -14,4 +16,6 @@ export {
   CreateCategory,
   CreateProduct,
   UsersList,
+  Products,
+  UpdateProduct,
 };

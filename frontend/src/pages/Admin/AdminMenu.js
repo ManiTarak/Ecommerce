@@ -14,6 +14,9 @@ const AdminMenu = () => {
           <NavLink to="create-product">Create Product</NavLink>
         </li>
         <li className="w-[100%] m-[10px] justify-center bg-yellow-600 p-[10px] text-center text-2xl font-serif font-semibold">
+          <NavLink to="products">Products</NavLink>
+        </li>
+        <li className="w-[100%] m-[10px] justify-center bg-yellow-600 p-[10px] text-center text-2xl font-serif font-semibold">
           <NavLink to="users">Users</NavLink>
         </li>
       </ul>
