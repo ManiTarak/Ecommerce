@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 const AdminMenu = () => {
   return (
-    <div className="flex flex-col bg-gray-50 h-[100%] flex items-center justify-center ">
+    <div className="flex flex-col bg-gray-50 h-[100%] flex items-center justify-center max-h-[76vh]">
       <h4 className="text-4xl font-semibold font-serif mt-[100px] ">
         ADMIN PANEL
       </h4>

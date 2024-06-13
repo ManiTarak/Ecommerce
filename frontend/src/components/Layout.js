@@ -12,7 +12,7 @@ function Layout(props) {
         <title>{props.title}</title>
       </Helmet>
       <Header></Header>
-      <main style={{ height: "76vh" }} className="overflow-y-auto">
+      <main style={{ height: "auto", minHeight: "76vh" }}>
         {props.children}
       </main>
       <Footer></Footer>

@@ -12,7 +12,7 @@ root.render(
     <Toaster />
     <AuthProvider>
       <BrowserRouter>
-        <App />
+        <App className="overflow-y-auto" />
       </BrowserRouter>
     </AuthProvider>
   </>
