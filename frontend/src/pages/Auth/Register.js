@@ -39,7 +39,7 @@ const Register = () => {
   };
   return (
     <Layout>
-      <div className="flex justify-center items-center h-full bg-gradient-to-r from-green-400 to-blue-500">
+      <div className="flex justify-center items-center w-full h-full min-h-[77.7vh] bg-gradient-to-r from-green-400 to-blue-500">
         <form
           className="flex flex-col  w-96 justify-center bg-yellow-300 items-center bg-gradient-to-r from-pink-500 to-yellow-500 shadow-md shadow-green-700"
           onSubmit={handleSubmitClick}
