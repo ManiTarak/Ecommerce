@@ -209,4 +209,65 @@ productRouter.delete(
     }
   }
 );
+
+//get-filtered-products
+productRouter.post("/get-filtered-products", async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+    const args = {};
+    if (checked.length > 0) {
+      args.category = checked;
+    }
+    if (radio.length) {
+      args.price = { $gte: radio[0], $lte: radio[1] };
+    }
+    const result = await Product.find(args).populate("category");
+    res.status(200).send({
+      success: true,
+      products: result,
+    });
+  } catch (e) {
+    res.status(500).send({
+      success: false,
+      message: "Something Bad Happend when fetching the filtered products",
+    });
+  }
+});
+
+//get-product count
+productRouter.get("/get-product-count", async (req, res) => {
+  try {
+    const total = await Product.find({}).estimatedDocumentCount();
+    res.status(200).send({
+      success: false,
+      total: total,
+    });
+  } catch (e) {
+    res.status(500).send({
+      success: false,
+      message: "Something Bad Happend while getting product count",
+    });
+  }
+});
+
+//get-products per page
+productRouter.get("/get-products/:page", async (req, res) => {
+  try {
+    const perPage = 2;
+    const products = await Product.find({})
+      .select("-photo")
+      .skip((req.params.page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      products: products,
+    });
+  } catch (e) {
+    res.status(500).send({
+      success: false,
+      message: "Something Bad Happend while getting products per page",
+    });
+  }
+});
 module.exports = productRouter;
