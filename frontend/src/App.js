@@ -10,6 +10,7 @@ import {
   Login,
   ForgetPass,
   ProtectedRoute,
+  SearchedProducts,
 } from "./pages/index";
 import {
   AdminDashboard,
@@ -69,6 +70,10 @@ function App() {
           <Route path="product/:id" element={<UpdateProduct></UpdateProduct>} />
         </Route>
       </Route>
+      <Route
+        path="/searched-products/:searchValue"
+        element={<SearchedProducts></SearchedProducts>}
+      ></Route>
       <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
     </Routes>
   );

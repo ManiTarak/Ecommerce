@@ -221,7 +221,9 @@ productRouter.post("/get-filtered-products", async (req, res) => {
     if (radio.length) {
       args.price = { $gte: radio[0], $lte: radio[1] };
     }
-    const result = await Product.find(args).populate("category");
+    const result = await Product.find(args)
+      .select("-photo")
+      .populate("category");
     res.status(200).send({
       success: true,
       products: result,
@@ -267,6 +269,34 @@ productRouter.get("/get-products/:page", async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Something Bad Happend while getting products per page",
+    });
+  }
+});
+
+//searched products
+productRouter.get("/searched-products/:pnorpd", async (req, res) => {
+  try {
+    const { pnorpd } = req.params;
+    const result = await Product.find({
+      $or: [
+        {
+          name: { $regex: pnorpd, $options: "i" },
+        },
+        {
+          name: { $regex: pnorpd, $options: "i" },
+        },
+      ],
+    })
+      .select("-photo")
+      .populate("category");
+    res.status(200).send({
+      success: true,
+      products: result,
+    });
+  } catch (e) {
+    res.status(500).send({
+      success: false,
+      message: "Something bad happend while getting searched products",
     });
   }
 });

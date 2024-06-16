@@ -7,7 +7,7 @@ import Register from "./Auth/Register";
 import Login from "./Auth/Login";
 import ForgetPass from "./Auth/ForgetPass";
 import ProtectedRoute from "./ProtectedRoute";
-
+import SearchedProducts from "./SearchedProducts";
 export {
   HomePage,
   About,
@@ -18,4 +18,5 @@ export {
   Login,
   ForgetPass,
   ProtectedRoute,
+  SearchedProducts,
 };
