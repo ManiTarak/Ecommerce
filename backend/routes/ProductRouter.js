@@ -300,4 +300,24 @@ productRouter.get("/searched-products/:pnorpd", async (req, res) => {
     });
   }
 });
+
+// get-similar-products
+productRouter.get("/get-similar-products/:pid/:cid", async (req, res) => {
+  try {
+    const { pid, cid } = req.params;
+    const products = await Product.find({
+      category: cid,
+      _id: { $ne: pid },
+    }).select("-photo");
+    res.status(200).send({
+      success: true,
+      products: products,
+    });
+  } catch (e) {
+    res.status(500).send({
+      success: false,
+      message: "Something bad happend while getting similar products",
+    });
+  }
+});
 module.exports = productRouter;

@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Layout from "../components/Layout";
 import { price } from "../utility/price";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   const [categories, setCategories] = useState([]);
@@ -15,6 +16,7 @@ function HomePage() {
   const [loadmoreLoading, setloadmoreLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
 
   // function to get categories , to display the list in filter
   const getCategories = async () => {
@@ -226,7 +228,12 @@ function HomePage() {
                         <button className="text-base font-serif bg-blue-600 p-[5px] text-white rounded-lg px-[15px]  mr-[5px] ">
                           Add Cart
                         </button>
-                        <button className="text-base font-serif bg-gray-500 p-[5px] text-white rounded-lg px-[15px]">
+                        <button
+                          onClick={(e) => {
+                            navigate(`/more-details/${p._id}`);
+                          }}
+                          className="text-base font-serif bg-gray-500 p-[5px] text-white rounded-lg px-[15px]"
+                        >
                           More Details
                         </button>
                       </div>

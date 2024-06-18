@@ -11,6 +11,7 @@ import {
   ForgetPass,
   ProtectedRoute,
   SearchedProducts,
+  MoreDetails,
 } from "./pages/index";
 import {
   AdminDashboard,
@@ -73,6 +74,10 @@ function App() {
       <Route
         path="/searched-products/:searchValue"
         element={<SearchedProducts></SearchedProducts>}
+      ></Route>
+      <Route
+        path="/more-details/:pid"
+        element={<MoreDetails></MoreDetails>}
       ></Route>
       <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
     </Routes>

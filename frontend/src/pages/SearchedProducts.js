@@ -1,8 +1,10 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SearchedProducts = () => {
+  const navigate = useNavigate();
   const products = useSelector((state) => {
     return state.firstReducer.results;
   });
@@ -46,7 +48,12 @@ const SearchedProducts = () => {
                     <button className="text-base font-serif bg-blue-600 p-[5px] text-white rounded-lg px-[15px]  mr-[5px] ">
                       Add Cart
                     </button>
-                    <button className="text-base font-serif bg-gray-500 p-[5px] text-white rounded-lg px-[15px]">
+                    <button
+                      onClick={(e) => {
+                        navigate(`/more-details/${p._id}`);
+                      }}
+                      className="text-base font-serif bg-gray-500 p-[5px] text-white rounded-lg px-[15px]"
+                    >
                       More Details
                     </button>
                   </div>
