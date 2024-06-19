@@ -1,1 +1,5 @@
 export const UPDATE_SEARCHED_PRODUCTS = "UPDATE_SEARCHED_PRODUCTS";
+
+//count action types
+
+export const UPDATE_CART_COUNT = "UPDATE_CART_COUNT";

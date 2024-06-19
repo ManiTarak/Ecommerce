@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AddToCart from "./AddToCart";
 
 const MoreDetails = () => {
   const { pid } = useParams();
@@ -73,7 +74,7 @@ const MoreDetails = () => {
                   Product Quantity : {product.quantity}
                 </p>
                 <button className="p-[10px] pb-[2px] pt-[2px] w-[150px] ml-[10px] font-serif bg-blue-600 p-[5px] text-white rounded-lg px-[15px]  mr-[5px] ">
-                  Add Cart
+                  <AddToCart product={product} />
                 </button>
               </div>
             </div>
@@ -117,9 +118,7 @@ const MoreDetails = () => {
                         </p>
 
                         <div className="w-[100%]  flex justify-center ">
-                          <button className="text-base font-serif bg-blue-600 p-[5px] text-white rounded-lg px-[15px]  mr-[5px] ">
-                            Add Cart
-                          </button>
+                          <AddToCart product={p} />
                         </div>
                       </div>
                     </div>

@@ -9,6 +9,7 @@ import ForgetPass from "./Auth/ForgetPass";
 import ProtectedRoute from "./ProtectedRoute";
 import SearchedProducts from "./SearchedProducts";
 import MoreDetails from "./MoreDetails";
+import AddToCart from "./AddToCart";
 export {
   HomePage,
   About,
@@ -21,4 +22,5 @@ export {
   ProtectedRoute,
   SearchedProducts,
   MoreDetails,
+  AddToCart,
 };

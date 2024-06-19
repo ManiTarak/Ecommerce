@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../components/Layout";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import AddToCart from "./AddToCart";
 
 const SearchedProducts = () => {
   const navigate = useNavigate();
@@ -45,9 +46,7 @@ const SearchedProducts = () => {
                   </p>
 
                   <div className="w-[100%]  flex justify-center ">
-                    <button className="text-base font-serif bg-blue-600 p-[5px] text-white rounded-lg px-[15px]  mr-[5px] ">
-                      Add Cart
-                    </button>
+                    <AddToCart product={p} />
                     <button
                       onClick={(e) => {
                         navigate(`/more-details/${p._id}`);

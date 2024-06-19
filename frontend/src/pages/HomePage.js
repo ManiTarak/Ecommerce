@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import Layout from "../components/Layout";
 import { price } from "../utility/price";
 import { useNavigate } from "react-router-dom";
+import AddToCart from "./AddToCart";
 
 function HomePage() {
   const [categories, setCategories] = useState([]);
@@ -123,6 +124,7 @@ function HomePage() {
     if (page == 1) return;
     loadmore();
   }, [page]);
+
   return (
     <div>
       <Layout
@@ -225,9 +227,7 @@ function HomePage() {
                       </p>
 
                       <div className="w-[100%]  flex justify-center ">
-                        <button className="text-base font-serif bg-blue-600 p-[5px] text-white rounded-lg px-[15px]  mr-[5px] ">
-                          Add Cart
-                        </button>
+                        <AddToCart product={p} />
                         <button
                           onClick={(e) => {
                             navigate(`/more-details/${p._id}`);

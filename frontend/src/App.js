@@ -25,6 +25,7 @@ import {
 } from "./pages/Admin/index";
 
 import { Orders, UserDashboard, Profile } from "./pages/User/index";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
         path="/more-details/:pid"
         element={<MoreDetails></MoreDetails>}
       ></Route>
+      <Route path="/cart" element={<Cart></Cart>} />
       <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
     </Routes>
   );

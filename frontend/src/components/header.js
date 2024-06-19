@@ -4,6 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import { useRef, useState } from "react";
 import { useAuth } from "../context/auth";
 import { MdArrowDropUp, MdArrowDropDown } from "react-icons/md";
+import { GiShoppingCart } from "react-icons/gi";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_SEARCHED_PRODUCTS } from "../redux/actionTypes";
@@ -19,6 +20,9 @@ function Header() {
     return state.firstReducer.results;
   });
   const dispatch = useDispatch();
+  const cartCount = useSelector((state) => {
+    return state.cartCountReducer.count;
+  });
   const handleClick = () => {
     setNav(!nav);
   };
@@ -37,8 +41,10 @@ function Header() {
   return (
     <>
       <nav className="sticky top-0 h-16 left-0 flex justify-between items-center bg-[#131921]  ">
-        <h1 className="text-white font-bold text-4xl ml-5">Website</h1>
-        <div className="w-[40%] flex flex-row">
+        <h1 className="text-white font-bold text-4xl ml-5 hidden md:block">
+          Website
+        </h1>
+        <div className="w-[40%]  flex-row hidden md:flex">
           <input
             type="search"
             value={searchValue}
@@ -87,6 +93,14 @@ function Header() {
           </Link>
           <Link className="hover:text-gray-400 hover:underline" to="/profile">
             <li>Profile</li>
+          </Link>
+          <Link className="hover:text-gray-400 relative" to="/cart">
+            <li>
+              <GiShoppingCart size={30} color="white"></GiShoppingCart>
+            </li>
+            <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 w-[20px] h-[20px] rounded-full bg-white flex justify-center items-center text-[12px] text-black">
+              <p>{cartCount > 99 ? "99+" : cartCount}</p>
+            </div>
           </Link>
 
           {!auth.user ? (
@@ -140,18 +154,70 @@ function Header() {
             </div>
           )}
         </ul>
-        <div className="md:hidden mr-4 z-10" onClick={handleClick}>
-          {nav ? (
-            <FaTimes size={25} color="white" />
-          ) : (
-            <RxHamburgerMenu size={25} color="white" />
-          )}
+        <div className="md:hidden ml-4 z-10 flex flex-row justify-between w-[100%]">
+          <div
+            className="md:hidden ml-4 z-10 flex items-center "
+            onClick={handleClick}
+          >
+            {nav ? (
+              <FaTimes size={25} color="white" />
+            ) : (
+              <RxHamburgerMenu size={25} color="white" />
+            )}
+          </div>
+          <div className="flex-row  flex md:hidden">
+            <input
+              type="search"
+              value={searchValue}
+              ref={searchFieldRef}
+              className="w-[90%] h-[40px] p-[10px] rounded-lg font-serif text-center focus:text-left"
+              placeholder="Search Product Here"
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+              }}
+            />
+            <button
+              onClick={async (e) => {
+                if (searchValue.trim().length == 0 || !searchValue.trim()) {
+                  setSearchValue("");
+                  searchFieldRef.current.focus();
+                  return;
+                } else {
+                  try {
+                    const result = await axios.get(
+                      `${process.env.REACT_APP_URL}/product/searched-products/${searchValue}`
+                    );
+
+                    dispatch({
+                      type: UPDATE_SEARCHED_PRODUCTS,
+                      keyword: searchValue,
+                      results: [...result.data.products],
+                    });
+                    navigate(`/searched-products/${searchValue}`);
+                  } catch (e) {
+                    toast.error(e.response.data.message);
+                  }
+                }
+              }}
+              className="ml-[8px] bg-green-600 pl-[8px] pr-[8px] pt-[2px] pb[2px] rounded-lg text-2xl text-white text-center"
+            >
+              Go
+            </button>
+          </div>
+          <div className="flex items-center mr-[10px] relative ">
+            <Link className="hover:text-gray-400" to="/cart">
+              <GiShoppingCart size={30} color="white"></GiShoppingCart>
+              <div className="absolute top-[5px] right-0 transform translate-x-1/2 -translate-y-1/2 w-[20px] h-[20px] rounded-full bg-white flex justify-center items-center text-[12px]">
+                <p>{cartCount > 99 ? "99+" : cartCount}</p>
+              </div>
+            </Link>
+          </div>
         </div>
         <ul
           className={`${
             nav
-              ? "text-white opacity-100 transform translate-x-0"
-              : "text-gray opacity-0 transform -translate-y-full"
+              ? "text-white opacity-100 transform translate-x-0 "
+              : "text-gray opacity-0 transform -translate-y-full hidden"
           } transition-transform absolute top-16 left-0 w-full h- flex flex-col justify-around items-center text-xl bg-zinc-800/80 md:hidden`}
           onClick={() => {
             setNav(false);
