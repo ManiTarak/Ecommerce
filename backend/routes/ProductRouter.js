@@ -7,6 +7,8 @@ const zod = require("zod");
 const productRouter = express.Router();
 const Product = require("../db/product");
 const slugify = require("slugify");
+const braintree = require("braintree");
+const OrderModel = require("../db/ordermodel");
 
 //Create-product  -  POST
 productRouter.post(
@@ -317,6 +319,71 @@ productRouter.get("/get-similar-products/:pid/:cid", async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Something bad happend while getting similar products",
+    });
+  }
+});
+
+// payment gateway
+
+var gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: "px5g7jpbzk8cvg6g",
+  publicKey: "2tj8k44kqtsr9qcg",
+  privateKey: "a6777b0ed674c69da0626ef423ae7dca",
+});
+
+// token
+productRouter.get("/braintree/token", (req, res) => {
+  try {
+    gateway.clientToken.generate({}, (err, response) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.send(response);
+      }
+    });
+  } catch (e) {
+    res.status(500).send({
+      message: "Something bad happend while getting payment token ",
+    });
+  }
+});
+
+// payments
+
+productRouter.post("/braintree/payment", authenticationCheck, (req, res) => {
+  try {
+    const { cart, nonce } = req.body;
+    let total = 0;
+    cart.map((i) => {
+      total = total + i.price;
+    });
+    let newTransaction = gateway.transaction.sale(
+      {
+        amount: total / 83.5,
+        paymentMethodNonce: nonce,
+        options: {
+          submitForSettlement: true,
+        },
+      },
+      function (err, result) {
+        if (result) {
+          const order = new OrderModel({
+            product: cart,
+            payment: result,
+            buyer: req.user._id,
+          }).save();
+          res.send({
+            ok: true,
+          });
+        } else {
+          res.status(500).send(err);
+        }
+      }
+    );
+  } catch (e) {
+    res.status(500).send({
+      message: "something bad happend in payments route",
     });
   }
 });

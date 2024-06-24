@@ -1,15 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_CART_COUNT } from "../redux/actionTypes";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import DropIn from "braintree-web-drop-in-react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
   const cartItems = useSelector((state) => {
     return state.cartCountReducer.cartItems;
   });
@@ -40,7 +46,7 @@ const Cart = () => {
     }
     return sum.toLocaleString("en-us", {
       style: "currency",
-      currency: "USD",
+      currency: "INR",
     });
   };
 
@@ -56,6 +62,51 @@ const Cart = () => {
       cartItems: a,
     });
   };
+
+  // function to get payment token
+  const getPaymentToken = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_URL}/product/braintree/token`
+      );
+
+      setClientToken(data?.clientToken);
+    } catch (e) {
+      console.error("something error in getPaymenttoken method");
+    }
+  };
+  useEffect(() => {
+    getPaymentToken();
+  }, [auth?.token]);
+
+  //function to handle make payment button click
+  const handleMakePayment = async () => {
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_URL}/product/braintree/payment`,
+        {
+          nonce,
+          cart: cartItems,
+        },
+        {
+          headers: {
+            Authorization: auth?.token,
+          },
+        }
+      );
+      setLoading(false);
+      localStorage.removeItem("cartItems");
+      dispatch({ type: UPDATE_CART_COUNT, count: 0, cartItems: [] });
+      navigate("/dashboard/user/orders");
+      toast.success("Payment completed successfully ");
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
+  };
+
   return (
     <Layout>
       <div className="w-full h-full  font-serif">
@@ -167,6 +218,35 @@ const Cart = () => {
                 </button>
               </div>
             )}
+            <div className="w-[100%] flex flex-col items-center">
+              {(!clientToken && auth?.token && auth?.user) ||
+              (cartItems.length == 0 && auth?.token && auth?.user) ? (
+                ""
+              ) : (
+                <>
+                  <DropIn
+                    options={{
+                      authorization: clientToken,
+                      paypal: {
+                        flow: "vault",
+                      },
+                    }}
+                    onInstance={(instance) => setInstance(instance)}
+                  />
+                  <button
+                    onClick={handleMakePayment}
+                    disabled={
+                      loading ||
+                      (!instance && instance !== "") ||
+                      !auth?.user?.address
+                    }
+                    className="text-xl w-[300px]  bg-blue-600 py-[5px] px-[10px] rounded-lg text-white  mt-[20px]  disabled:cursor-not-allowed disabled:bg-yellow-500 hover:cursor-pointer"
+                  >
+                    {loading ? "Processing ..." : "Make Payment"}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
