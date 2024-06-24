@@ -2,8 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_CART_COUNT } from "../redux/actionTypes";
 import Layout from "../components/Layout";
+import { useAuth } from "../context/auth";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Cart = () => {
+  const [auth, setAuth] = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const cartItems = useSelector((state) => {
     return state.cartCountReducer.cartItems;
   });
@@ -32,7 +38,10 @@ const Cart = () => {
         sum = sum + cartItems[i].price;
       }
     }
-    return sum;
+    return sum.toLocaleString("en-us", {
+      style: "currency",
+      currency: "USD",
+    });
   };
 
   // function to remove item from the cart list
@@ -53,6 +62,16 @@ const Cart = () => {
         <h2 className="w-[100%] md:w-[65%]   text-center font-semibold text-4xl font-serif p-[10px] ">
           CART ITEMS
         </h2>
+        <h3 className="w-[100%] md:w-[65%]   text-center font-semibold text-2xl font-serif  ">
+          Hello {auth?.user?.name}
+        </h3>
+        <h5 className="w-[100%] md:w-[65%]   text-center font-base text-xl font-serif ">
+          {cartItems.length >= 1
+            ? `You have ${cartItems.length} items in cart ${
+                auth?.token && auth?.user ? "" : "Please Login to Checkout"
+              }`
+            : ""}
+        </h5>
         <div className="w-full h-[100%] grid md:grid-cols-[65%,33%] ">
           {cartItems?.length == 0 && (
             <div className="w-[100%] h-[100%] flex justify-center items-center text-3xl text-center">
@@ -103,8 +122,51 @@ const Cart = () => {
             </p>
             <hr />
             <h4 className="text-3xl font-semibold font-serif text-center mt-[30px] mb-[30px]">
-              Total - {caluclateTotal()}
+              Total -{" "}
+              <span className="font-mono font-normal">{caluclateTotal()}</span>
             </h4>
+            {auth?.token && auth?.user?.address ? (
+              <div className="w-[100%] p-[10px] flex flex-col items-center">
+                <h5 className="text-2xl font-semibold font-serif text-center  ">
+                  Current Address :
+                </h5>
+                <h6 className="text-xl font-base font-serif text-center ">
+                  {auth?.user?.address}
+                </h6>
+                <button
+                  onClick={() => {
+                    navigate("/dashboard/user/profile");
+                  }}
+                  className="text-xl w-[200px] bg-slate-50 hover:bg-yellow-500 py-[5px] px-[10px] rounded-lg text-yellow-600 hover:text-white border-[1px] border-yellow-600 mt-[20px]"
+                >
+                  Update Address
+                </button>
+              </div>
+            ) : auth?.token && auth?.user ? (
+              <div className="w-[100%] p-[10px] flex flex-col items-center">
+                <button
+                  onClick={() => {
+                    navigate("/dashboard/user/profile");
+                  }}
+                  className="text-xl w-[200px] bg-slate-50 hover:bg-yellow-500 py-[5px] px-[10px] rounded-lg text-yellow-600 hover:text-white border-[1px] border-yellow-600 mt-[20px]"
+                >
+                  Update Address
+                </button>
+              </div>
+            ) : (
+              <div className="w-[100%] p-[10px] flex flex-col items-center">
+                <button
+                  onClick={() => {
+                    navigate("/login", {
+                      state: { path: location.pathname },
+                    });
+                  }}
+                  className="text-xl w-[300px] bg-slate-50 hover:bg-yellow-500 py-[5px] px-[10px] rounded-lg text-yellow-600 hover:text-white border-[1px] border-yellow-600 mt-[20px]"
+                >
+                  Please Login To Checkout
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
