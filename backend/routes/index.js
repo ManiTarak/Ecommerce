@@ -9,6 +9,7 @@ const { hashpassword } = require("../helpers/hashingPass");
 const isAdmin = require("../middlewares/isAdmin");
 const categoryRouter = require("./CategoryRouter");
 const productRouter = require("./ProductRouter");
+const orderRouter = require("./ordersRoute");
 //signup route
 rootRouter.use("/signup", signupRouter);
 
@@ -55,5 +56,8 @@ rootRouter.use("/category", categoryRouter);
 
 // Product - route
 rootRouter.use("/product", productRouter);
+
+//Orders -Route
+rootRouter.use("/orders", orderRouter);
 
 module.exports = rootRouter;
