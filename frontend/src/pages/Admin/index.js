@@ -7,6 +7,7 @@ import CreateProduct from "./CreateProduct";
 import UsersList from "./UsersList";
 import Products from "./Products";
 import UpdateProduct from "./UpdateProduct";
+import AdminOrders from "./AdminOrders";
 
 export {
   AdminDashboard,
@@ -18,4 +19,5 @@ export {
   UsersList,
   Products,
   UpdateProduct,
+  AdminOrders,
 };

@@ -22,6 +22,7 @@ import {
   UsersList,
   Products,
   UpdateProduct,
+  AdminOrders,
 } from "./pages/Admin/index";
 
 import { Orders, UserDashboard, Profile } from "./pages/User/index";
@@ -70,6 +71,7 @@ function App() {
           <Route path="products" element={<Products></Products>}></Route>
           <Route path="users" element={<UsersList></UsersList>}></Route>
           <Route path="product/:id" element={<UpdateProduct></UpdateProduct>} />
+          <Route path="orders" element={<AdminOrders></AdminOrders>}></Route>
         </Route>
       </Route>
       <Route
