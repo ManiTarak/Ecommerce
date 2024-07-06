@@ -132,8 +132,8 @@ function HomePage() {
         description="Home page for the application"
         keywords="mongodb react js node express"
       >
-        <div className="grid grid-cols-[300px_auto] w-full h-full min-h-[76vh]">
-          <div className="bg-white">
+        <div className="grid  md:grid-cols-[300px_auto] w-full h-full min-h-[76vh]">
+          <div className="bg-white hidden md:block">
             <div className=" p-[10px]">
               <h6 className="text-black text-2xl font-semibold mb-[10px] mt-[10px] font-serif">
                 Filter By Category
@@ -215,7 +215,9 @@ function HomePage() {
                       </div>
                       <hr />
                       <p className="text-lg font-semibold font-serif p-[10px] pb-[2px]">
-                        {p.name}
+                        {p.name.length > 12
+                          ? `${p.name.substr(0, 12)}...`
+                          : p.name}
                       </p>
                       <p className="text-sm  font-serif p-[10px] pt-[2px] pb-[2px]">
                         {p.description.length > 25

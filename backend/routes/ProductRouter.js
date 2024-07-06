@@ -62,6 +62,7 @@ productRouter.post(
         });
       }
     } catch (e) {
+      console.log(e);
       res.status(500).send({
         success: true,
         message: "Something bad happend in creating product",

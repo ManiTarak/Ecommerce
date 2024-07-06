@@ -46,20 +46,23 @@ const UpdateProduct = () => {
       const result = await axios.get(
         `${process.env.REACT_APP_URL}/product/get-Single-Product/${params.id}`
       );
-      setName(result.data.product.name);
-      setDescription(result.data.product.description);
-      setPrice(result.data.product.price);
-      setQuantity(result.data.product.quantity);
-      setSelectedYNOption(
-        result.data.product.shipping
-          ? { value: 1, label: "Yes" }
-          : { value: 0, label: "No" }
-      );
-      setSelectedOption({
-        value: result.data.product.category._id,
-        label: result.data.product.category.name,
-        slug: result.data.product.category.slug,
-      });
+      if (result.data.product !== null) {
+        setName(result.data.product.name);
+        setDescription(result.data.product.description);
+        setPrice(result.data.product.price);
+        setQuantity(result.data.product.quantity);
+        setSelectedYNOption(
+          result.data.product.shipping
+            ? { value: 1, label: "Yes" }
+            : { value: 0, label: "No" }
+        );
+        if (result.data.category !== null)
+          setSelectedOption({
+            value: result.data.product.category._id,
+            label: result.data.product.category.name,
+            slug: result.data.product.category.slug,
+          });
+      }
     } catch (e) {
       toast.error(e.response.data.message);
     }

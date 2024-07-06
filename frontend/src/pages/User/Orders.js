@@ -20,12 +20,12 @@ const Orders = () => {
   useEffect(() => {
     getOrders();
   }, []);
-  console.log("orders", orders);
+
   return (
     <div className="w-[100%] h-[100%] p-[10px] bg-white">
       {orders.map((o, i) => {
         return (
-          <>
+          <div key={o.id}>
             <table className=" w-[100%]  ">
               <thead>
                 <tr className="font-serif font-semibold">
@@ -73,7 +73,7 @@ const Orders = () => {
                 </div>
               );
             })}
-          </>
+          </div>
         );
       })}
     </div>

@@ -48,13 +48,13 @@ const MoreDetails = () => {
       {product ? (
         <div className="w-full h-auto min-h-[77.7vh]  ">
           <h2 className="text-center p-[20px] text-4xl font-semibold font-serif pb-[10px]">
-            {`${product.name}  ` + "Details"}
+            Product Details
           </h2>
-          <div className="w-[100%] h-auto md:h-[350px] grid md:grid-cols-[40%,60%]  ">
+          <div className="w-[100%] h-auto md:h-[auto] grid md:grid-cols-[40%,60%]  ">
             <div className=" p-[20px] flex justify-center items-center ">
               <div className="w-[90%] h-[90%] rounded-lg border-[1px] flex justify-center items-center ">
                 <img
-                  className="rounded-lg object-cover h-[90%] w-[90%]"
+                  className="rounded-lg  h-[90%] w-[90%]"
                   src={`${process.env.REACT_APP_URL}/product/get-photo/${product._id}`}
                 ></img>
               </div>
@@ -106,7 +106,9 @@ const MoreDetails = () => {
                         </div>
                         <hr />
                         <p className="text-lg font-semibold font-serif p-[10px] pb-[2px]">
-                          {p.name}
+                          {p.name.length > 25
+                            ? `${p.name.substr(0, 25)}...`
+                            : p.name}
                         </p>
                         <p className="text-sm  font-serif p-[10px] pt-[2px] pb-[2px]">
                           {p.description.length > 25

@@ -33,7 +33,6 @@ const Cart = () => {
       count: cartItems.length,
       cartItems: cartItems,
     });
-    console.log(cartItems);
   }, []);
 
   // function to caluclate the total price of the products
@@ -72,7 +71,7 @@ const Cart = () => {
 
       setClientToken(data?.clientToken);
     } catch (e) {
-      console.error("something error in getPaymenttoken method");
+      toast.error("Something bad happend while getPaymentToken FE");
     }
   };
   useEffect(() => {
@@ -102,13 +101,17 @@ const Cart = () => {
       navigate("/dashboard/user/orders");
       toast.success("Payment completed successfully ");
     } catch (e) {
-      console.log(e);
+      toast.error("Something Bad happend while making payments at FE ");
       setLoading(false);
     }
   };
 
   return (
-    <Layout>
+    <Layout
+      title="Cart - E-App "
+      description="Cart which contains your products"
+      keywords="mongodb react js node express"
+    >
       <div className="w-full h-full  font-serif">
         <h2 className="w-[100%] md:w-[65%]   text-center font-semibold text-4xl font-serif p-[10px] ">
           CART ITEMS
@@ -212,7 +215,7 @@ const Cart = () => {
                       state: { path: location.pathname },
                     });
                   }}
-                  className="text-xl w-[300px] bg-slate-50 hover:bg-yellow-500 py-[5px] px-[10px] rounded-lg text-yellow-600 hover:text-white border-[1px] border-yellow-600 mt-[20px]"
+                  className="text-xl w-[250px] bg-slate-50 hover:bg-yellow-500 py-[5px] px-[10px] rounded-lg text-yellow-600 hover:text-white border-[1px] border-yellow-600 mt-[20px]"
                 >
                   Please Login To Checkout
                 </button>
@@ -240,7 +243,7 @@ const Cart = () => {
                       (!instance && instance !== "") ||
                       !auth?.user?.address
                     }
-                    className="text-xl w-[300px]  bg-blue-600 py-[5px] px-[10px] rounded-lg text-white  mt-[20px]  disabled:cursor-not-allowed disabled:bg-yellow-500 hover:cursor-pointer"
+                    className="text-xl w-[200px]  bg-blue-600 py-[5px] px-[10px] rounded-lg text-white  mt-[20px]  disabled:cursor-not-allowed disabled:bg-yellow-500 hover:cursor-pointer"
                   >
                     {loading ? "Processing ..." : "Make Payment"}
                   </button>

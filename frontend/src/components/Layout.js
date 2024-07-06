@@ -12,7 +12,7 @@ function Layout(props) {
         <title>{props.title}</title>
       </Helmet>
       <Header></Header>
-      <main style={{ height: "auto", minHeight: "76vh" }}>
+      <main style={{ height: "100%", minHeight: "76vh" }}>
         {props.children}
       </main>
       <Footer></Footer>

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreateProduct = () => {
   const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState();
   const [photo, setPhoto] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -61,7 +61,7 @@ const CreateProduct = () => {
     }
   };
   return (
-    <div className="w-[90%] h-[90%] flex flex-col m-[10px] ml-[20px]">
+    <div className="w-[100%] h-[100%] flex flex-col mt-[10px] mb-[10px] p-[20px] bg-blue-600">
       <h3 className="font-serif text-4xl font-semibold mb-[10px]">
         Creating Product
       </h3>

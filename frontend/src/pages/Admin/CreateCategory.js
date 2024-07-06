@@ -78,14 +78,19 @@ const CreateCategory = () => {
   useEffect(() => {
     getCategories();
   }, []);
-
+  useEffect(() => {
+    if (editpop) document.body.style.overflowY = "hidden";
+    return () => {
+      document.body.style.overflowY = "scroll";
+    };
+  }, [editpop]);
   return (
-    <div className="m-[10px] ml-[20px] w-[90%] h-[90%] flex flex-col ">
+    <div className="p-[10px]  w-[100%]  flex flex-col justify-center items-center ">
       <h3 className="font-bold text-4xl font-serif">Manage Category</h3>
       <div className="ml-4  mt-[10px] flex flex-col w-[90%]">
         <input
           onChange={handleChange}
-          className=" mb-4 w-[70%] font-serif p-[7px] text-[18px]"
+          className=" mb-4 w-[70%] font-serif p-[7px] text-[18px] border-[1px]"
           placeholder="Enter the collection name"
           value={inp}
         ></input>
@@ -96,8 +101,8 @@ const CreateCategory = () => {
           Submit
         </button>
       </div>
-      <hr className="m-[10px] mt-[20px] mb-[20px]"></hr>
-      <div className="flex flex-col mb-4 w-[90%] ">
+      <hr className=" mt-[20px] mb-[20px]"></hr>
+      <div className="flex flex-col mb-4 w-[90%]  ">
         {category &&
           category.map((cate) => {
             return (
@@ -183,9 +188,10 @@ const EditCategory = (props) => {
       toast.error(e.response.data.message);
     }
   };
+
   return (
-    <div className="w-[100vw] top-[0px] left-[0px] absolute flex justify-center items-center h-[100vh] bg-gray-200 opacity-95">
-      <div className="fixed w-[500px] h-[150px] p-[20px] bg-amber-950 rounded-lg">
+    <div className="w-[100%] top-[0px] left-[0px] absolute    h-[100%] bg-gray-200 opacity-95 ">
+      <div className="fixed w-[350px] h-[150px] md:w-[500px] p-[20px] top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] bg-amber-950 rounded-lg">
         <IoCloseCircleOutline
           size={25}
           color="white"

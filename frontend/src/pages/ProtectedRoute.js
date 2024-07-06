@@ -25,6 +25,8 @@ const ProtectedRoute = ({ children }) => {
     }
     if (JSON.parse(localStorage.getItem("authInfo"))) {
       backendCall();
+    } else {
+      navigate("/login", { state: { path: location.pathname } });
     }
   }, [auth?.token]);
 
@@ -33,7 +35,9 @@ const ProtectedRoute = ({ children }) => {
       {auth.user ? (
         <Outlet />
       ) : (
-        <Navigate to="/login" state={{ path: location.pathname }}></Navigate>
+        <div className="h-[100%] flex w-[100%] justify-center text-4xl items-center">
+          Loading ...
+        </div>
       )}
     </div>
   );

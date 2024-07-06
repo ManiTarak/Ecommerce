@@ -53,7 +53,7 @@ const Profile = () => {
     <div className="flex justify-center items-center w-full h-full min-h-[77.7vh] bg-gradient-to-r from-green-400 to-blue-500">
       <form
         onSubmit={handleUpdateDetails}
-        className="flex flex-col  w-96 justify-center bg-yellow-300 items-center bg-gradient-to-r from-pink-500 to-yellow-500 shadow-md shadow-green-700"
+        className="flex flex-col  w-[100%] md:w-96 justify-center bg-yellow-300 items-center bg-gradient-to-r from-pink-500 to-yellow-500 shadow-md shadow-green-700"
       >
         <h1 className="text-center mb-5 mt-2 font-bold text-black-500 text-3xl font-serif">
           PROFILE

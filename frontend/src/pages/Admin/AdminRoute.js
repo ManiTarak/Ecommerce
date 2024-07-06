@@ -26,7 +26,6 @@ const AdminRoute = ({ children }) => {
           navigate(location.pathname);
         }
       } catch (result) {
-        console.log(result);
         if (!result.response.data.admin && result.response.status === 404) {
           navigate("/");
         } else {
@@ -44,7 +43,9 @@ const AdminRoute = ({ children }) => {
       {auth.user && auth.user.role === 0 ? (
         <Outlet />
       ) : (
-        <Login state={{ path: location.pathname }}></Login>
+        <div className="h-[100%] flex w-[100%] justify-center text-4xl items-center">
+          Loading ...
+        </div>
       )}
     </div>
   );

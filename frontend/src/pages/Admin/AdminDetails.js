@@ -3,7 +3,7 @@ import { useAuth } from "../../context/auth";
 const AdminDetails = () => {
   const [auth, setAuth] = useAuth();
   return (
-    <div className="flex flex-col w-[100%] h-[100%] justify-center ">
+    <div className="flex flex-col w-[100%] h-[490px] justify-center bg-blue-600">
       <div className="p-[10px] m-[10px] text-4xl font-serif text-gray-100 font-medium">
         {"Admin Name:" + auth?.user?.name}
       </div>

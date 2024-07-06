@@ -87,12 +87,11 @@ function Header() {
           <Link className="hover:text-gray-400 hover:underline" to="/">
             <li>Home</li>
           </Link>
-
-          <Link className="hover:text-gray-400 hover:underline" to="/contact">
-            <li>Contact</li>
-          </Link>
-          <Link className="hover:text-gray-400 hover:underline" to="/profile">
-            <li>Profile</li>
+          <Link
+            className="hover:text-gray-400 hover:underline"
+            to={`/dashboard/${auth?.user?.role == 0 ? "admin" : "user"}`}
+          >
+            <li>Dashboard</li>
           </Link>
           <Link className="hover:text-gray-400 relative" to="/cart">
             <li>
@@ -227,13 +226,10 @@ function Header() {
             <li>Home</li>
           </Link>
 
-          <Link className="hover:text-gray-400" to="/contact">
-            <li>Contact</li>
-          </Link>
-          <Link className="hover:text-gray-400" to="/profile">
-            <li>Profile</li>
-          </Link>
-          <Link className="hover:text-gray-400" to="/dashboard">
+          <Link
+            className="hover:text-gray-400"
+            to={`/dashboard/${auth?.user?.role == 0 ? "admin" : "user"}`}
+          >
             <li>Dashboard</li>
           </Link>
           {!auth.user ? (
