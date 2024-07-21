@@ -41,7 +41,7 @@ function HomePage() {
     try {
       setLoading(true);
       const result = await axios.get(
-        `${process.env.REACT_APP_URL}/product//get-products/${1}`
+        `${process.env.REACT_APP_URL}/product/get-products/${1}`
       );
       setProducts(result.data.products);
       setLoading(false);
@@ -128,7 +128,7 @@ function HomePage() {
   return (
     <div>
       <Layout
-        title="Home - Ecommerce "
+        title="Home - E-App"
         description="Home page for the application"
         keywords="mongodb react js node express"
       >
