@@ -42,7 +42,7 @@ function Header() {
     <>
       <nav className="sticky top-0 h-16 left-0 flex justify-between items-center bg-[#131921]  ">
         <h1 className="text-white font-bold text-4xl ml-5 hidden md:block">
-          Website
+          E-App
         </h1>
         <div className="w-[40%]  flex-row hidden md:flex">
           <input
